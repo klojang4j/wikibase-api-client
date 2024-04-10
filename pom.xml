@@ -88,13 +88,13 @@
         <klojang-util.version>1.1.8</klojang-util.version>
         <klojang-collections.version>2.0.9</klojang-collections.version>
         <klojang-convert.version>1.0.8</klojang-convert.version>
-        <klojang-invoke.version>2.0.4</klojang-invoke.version>
+        <klojang-invoke.version>2.0.6</klojang-invoke.version>
         <klojang-templates.version>1.0.10</klojang-templates.version>
 
-        <commons-text.version>1.11.0</commons-text.version>
         <apache-httpclient.version>4.5.14</apache-httpclient.version>
         <slf4j.version>2.0.6</slf4j.version>
-        <junit.version>5.10.1</junit.version>
+
+        <junit.version>5.10.2</junit.version>
 
     </properties>
 
@@ -131,9 +131,15 @@
             <version>${klojang-templates.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>${commons-text.version}</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -143,7 +149,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.12</version>
+            <version>1.5.0</version>
             <scope>test</scope>
         </dependency>
 

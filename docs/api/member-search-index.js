@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"org.klojang.wbapiclient","c":"Wikibase","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"org.klojang.wbapiclient","c":"Wikibase","l":"Wikibase()","u":"%3Cinit%3E()"}];updateSearchResults();

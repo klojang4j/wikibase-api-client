@@ -3,4 +3,4 @@
  * <a href="../../../module-summary.html">module summary</a> for a
  * detailed explanation.
  */
-package org.klojang.check;
+package org.klojang.wbapiclient;
