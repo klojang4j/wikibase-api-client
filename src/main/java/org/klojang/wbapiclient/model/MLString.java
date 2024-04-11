@@ -1,4 +1,4 @@
-package org.klojang.wbapiclient;
+package org.klojang.wbapiclient.model;
 
 /**
  * A language-bound string &#8212; that is, a string that is associated with a language
@@ -15,4 +15,4 @@ package org.klojang.wbapiclient;
  * @param language the two-, three- or six-letter language code
  * @param value the string
  */
-public record LBString(String language, String value) { }
+public record MLString(String language, String value) { }

@@ -2,7 +2,9 @@
  * Wikibase API client
  */
 module org.klojang.wbapiclient {
+
   exports org.klojang.wbapiclient;
+  exports org.klojang.wbapiclient.model;
 
   requires org.klojang.check;
   requires org.klojang.util;

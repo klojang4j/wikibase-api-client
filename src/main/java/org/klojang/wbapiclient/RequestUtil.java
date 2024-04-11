@@ -4,14 +4,15 @@ import java.util.Map;
 
 import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Map.Entry;
 
 class RequestUtil {
 
   private RequestUtil() { throw new UnsupportedOperationException(); }
 
-  static String getFormDataAsString(Map<String, Object> formData) {
+  static String urlEncodeFormData(Map<String, Object> formData) {
     StringBuilder sb = new StringBuilder();
-    for (Map.Entry<String, Object> entry : formData.entrySet()) {
+    for (Entry<String, Object> entry : formData.entrySet()) {
       if (sb.length() > 0) {
         sb.append("&");
       }
