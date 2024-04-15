@@ -1,5 +1,7 @@
 package org.klojang.wbapiclient;
 
+import org.klojang.wbapiclient.x.JsonUtil;
+
 import java.util.Map;
 
 import static java.net.URLEncoder.encode;

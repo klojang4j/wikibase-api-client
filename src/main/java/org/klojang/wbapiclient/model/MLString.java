@@ -1,7 +1,7 @@
 package org.klojang.wbapiclient.model;
 
 /**
- * A language-bound string &#8212; that is, a string that is associated with a language
+ * A multilingual string &#8212; that is, a string that is associated with a language
  * code. The language code is deliberately kept as a string and not as a symbolic constant
  * or an {@code enum}. Using a symbolic constant or {@code enum} to represent a language
  * would make the Wikibase API client too dependent on changes in the set of languages

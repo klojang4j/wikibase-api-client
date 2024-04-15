@@ -5,6 +5,8 @@ public record WbProperty(String datatype,
       MLMap descriptions) {
 
   public WbProperty(String languageCode, String label, String description) {
-    this("string", new MLMap(languageCode, label), new MLMap(languageCode, description));
+    this("string",
+          MLMap.create(languageCode, label),
+          MLMap.create(languageCode, description));
   }
 }
