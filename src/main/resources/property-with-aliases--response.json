@@ -1,0 +1,44 @@
+{
+  "entity": {
+    "type": "property",
+    "datatype": "string",
+    "id": "P42",
+    "labels": {
+      "en": {
+        "language": "en",
+        "value": "label 1 (en)"
+      },
+      "nl": {
+        "language": "nl",
+        "value": "label 1 (nl)"
+      }
+    },
+    "descriptions": {
+      "en": {
+        "language": "en",
+        "value": "description 1 (en)"
+      },
+      "nl": {
+        "language": "nl",
+        "value": "description 1 (nl)"
+      }
+    },
+    "aliases": {
+      "en": [
+        {
+          "language": "en",
+          "value": "label 1: alias 2 (en)"
+        }
+      ],
+      "nl": [
+        {
+          "language": "nl",
+          "value": "label 1: alias 1 (nl)"
+        }
+      ]
+    },
+    "claims": {},
+    "lastrevid": 25
+  },
+  "success": 1
+}

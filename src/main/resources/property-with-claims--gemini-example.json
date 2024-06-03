@@ -1,0 +1,28 @@
+{
+  "descriptions": {},
+  "aliases": [
+    { "language": "en", "value": "Alias 1" },
+    { "language": "en", "value": "Alias 2" }
+  ],
+  "datatype": "your_datatype",
+  "claims": [
+    {
+      "mainsnak": {
+        "snaktype": "value",  # Adjust snaktype based on claim type
+        "property": "P###",  # Replace with the property ID for the claim
+        "datavalue": {
+          "value": "your_claim_value",  # Replace with the actual claim value
+          "type": "your_value_type"  # Adjust type based on claim value (e.g., "string", "wikibase-item")
+        }
+      },
+      "references": [  # Optional: Add references for the claim
+    {
+      "datavalue": {
+        "value": "reference_url",  # Replace with the reference URL
+        "type": "string"
+      }
+    }
+  ]
+}
+]
+}

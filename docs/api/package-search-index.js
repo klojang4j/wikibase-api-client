@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.klojang.wbapiclient","l":"org.klojang.wbapiclient"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.klojang.wbapiclient","l":"org.klojang.wbapiclient"},{"m":"org.klojang.wbapiclient","l":"org.klojang.wbapiclient.model"}];updateSearchResults();

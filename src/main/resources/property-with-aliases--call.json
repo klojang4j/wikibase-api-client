@@ -1,0 +1,37 @@
+{
+  "datatype" : "string",
+  "labels" : {
+    "en" : {
+      "language" : "en",
+      "value" : "label 1 (en)"
+    },
+    "nl" : {
+      "language" : "nl",
+      "value" : "label 1 (nl)"
+    }
+  },
+  "descriptions" : {
+    "en" : {
+      "language" : "en",
+      "value" : "description 1 (en)"
+    },
+    "nl" : {
+      "language" : "nl",
+      "value" : "description 1 (nl)"
+    }
+  },
+  "aliases" : [
+    {
+      "language" : "en",
+      "value" : "label 1: alias 1 (en)"
+    },
+    {
+      "language" : "en",
+      "value" : "label 1: alias 2 (en)"
+    },
+    {
+      "language" : "nl",
+      "value" : "label 1: alias 1 (nl)"
+    }
+  ]
+}

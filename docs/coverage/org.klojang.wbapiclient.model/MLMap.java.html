@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MLMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wikibase API client</a> &gt; <a href="index.source.html" class="el_package">org.klojang.wbapiclient.model</a> &gt; <span class="el_source">MLMap.java</span></div><h1>MLMap.java</h1><pre class="source lang-java linenums">package org.klojang.wbapiclient.model;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.klojang.wbapiclient.x.JsonUtil;
+
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toUnmodifiableMap;
+
+/**
+ * {@code MLMap} reflects the structure of the {@code labels}, {@code descriptions}, and
+ * {@code descriptions} fields within an {@code entity} object. Somewhat oddly, it is a
+ * map whose keys are language codes and whose values are objects that again contain a
+ * language code which, in practice, must be the identical to the key.
+ */
+public final class MLMap extends AbstractMap&lt;String, MLString&gt; {
+
+<span class="fc" id="L23">  private static final TypeReference&lt;Map&lt;String, MLString&gt;&gt; TYPE_REF = new TypeReference&lt;&gt;() { };</span>
+
+  @JsonCreator
+  static MLMap fromJson(String json) {
+<span class="fc" id="L27">    Map&lt;String, MLString&gt; map = JsonUtil.parse(json, TYPE_REF);</span>
+<span class="fc" id="L28">    return new MLMap(map);</span>
+  }
+
+  /**
+   * Creates a single-entry {@code MLMap}.
+   *
+   * @param lang the language code
+   * @param text the text for that language
+   * @return a single-entry {@code MLMap}
+   */
+  public static MLMap create(String lang, String text) {
+<span class="fc" id="L39">    return new MLMap(List.of(new MLString(lang, text)));</span>
+  }
+
+  /**
+   * Creates an {@code MLMap} for two languages.
+   *
+   * @param lang0 the language code for the first language
+   * @param text0 the text for the first language
+   * @param lang1 the language code for the second language
+   * @param text1 the text for the second language
+   * @return an {@code MLMap} for two languages
+   */
+  public static MLMap create(String lang0, String text0, String lang1, String text1) {
+<span class="fc" id="L52">    return new MLMap(List.of(new MLString(lang0, text0), new MLString(lang1, text1)));</span>
+  }
+
+  /**
+   * Creates an {@code MLMap} for three languages.
+   *
+   * @param lang0 the language code for the first language
+   * @param text0 the text for the first language
+   * @param lang1 the language code for the second language
+   * @param text1 the text for the second language
+   * @param lang1 the language code for the third language
+   * @param text1 the text for the third language
+   * @return an {@code MLMap} for three languages
+   */
+  public static MLMap create(String lang0,
+        String text0,
+        String lang1,
+        String text1,
+        String lang2,
+        String text2) {
+<span class="nc" id="L72">    return new MLMap(List.of(new MLString(lang0, text0),</span>
+          new MLString(lang1, text1),
+          new MLString(lang2, text2)));
+  }
+
+  /**
+   * Creates an {@code MLMap} for an arbitrary number of languages.
+   *
+   * @param strings the multilingual strings
+   * @return an {@code MLMap} for an arbitrary number of languages
+   */
+  public static MLMap create(List&lt;MLString&gt; strings) {
+<span class="nc" id="L84">    return new MLMap(strings);</span>
+  }
+
+  private final Map&lt;String, MLString&gt; map;
+
+<span class="fc" id="L89">  private MLMap(List&lt;MLString&gt; strings) {</span>
+<span class="fc" id="L90">    map = strings.stream().collect(toUnmodifiableMap(MLString::language, identity()));</span>
+<span class="fc" id="L91">  }</span>
+
+<span class="fc" id="L93">  private MLMap(Map&lt;String, MLString&gt; map) { this.map = map; }</span>
+
+  @Override
+<span class="fc" id="L96">  public Set&lt;Entry&lt;String, MLString&gt;&gt; entrySet() { return map.entrySet(); }</span>
+
+  @Override
+<span class="fc" id="L99">  public boolean equals(Object obj) { return map.equals(obj); }</span>
+
+<span class="nc" id="L101">  public int hashCode() { return map.hashCode(); }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

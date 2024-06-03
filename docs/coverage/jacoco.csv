@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Wikibase API client,org.klojang.wbapiclient.x,JsonUtil,23,16,0,0,8,4,2,4,2,4
+Wikibase API client,org.klojang.wbapiclient.model,MLMap,29,67,0,0,3,11,3,8,3,8
+Wikibase API client,org.klojang.wbapiclient.model,WbProperty,22,0,0,0,5,0,2,0,2,0
+Wikibase API client,org.klojang.wbapiclient.model,MLString,0,9,0,0,0,1,0,1,0,1
+Wikibase API client,org.klojang.wbapiclient.model,MLMap.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
+Wikibase API client,org.klojang.wbapiclient,WbApiException,13,0,0,0,6,0,3,0,3,0
+Wikibase API client,org.klojang.wbapiclient,Wikibase,270,0,2,0,83,0,4,0,3,0
+Wikibase API client,org.klojang.wbapiclient,NotRecognizedLanguageException,4,0,0,0,2,0,1,0,1,0
+Wikibase API client,org.klojang.wbapiclient,RequestUtil,170,0,20,0,34,0,18,0,4,0
+Wikibase API client,org.klojang.wbapiclient,InvalidJsonException,4,0,0,0,2,0,1,0,1,0

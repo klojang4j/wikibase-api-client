@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MLString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wikibase API client</a> &gt; <a href="index.source.html" class="el_package">org.klojang.wbapiclient.model</a> &gt; <span class="el_source">MLString.java</span></div><h1>MLString.java</h1><pre class="source lang-java linenums">package org.klojang.wbapiclient.model;
+
+/**
+ * A multilingual string &amp;#8212; that is, a string that is associated with a language
+ * code. The language code is deliberately kept as a string and not as a symbolic constant
+ * or an {@code enum}. Using a symbolic constant or {@code enum} to represent a language
+ * would make the Wikibase API client too dependent on changes in the set of languages
+ * currently defined in Wikidata. (Note that languages are themselves Wikidata items.)
+ * Each change would require a new release of the Wikibase API client. Also note that
+ * Wikidata language codes by and large are the same as ISO language codes, but &lt;i&gt;not
+ * necessarily&lt;/i&gt;. &lt;p&gt;See &lt;a
+ * href=&quot;https://www.wikidata.org/wiki/Help:Wikimedia_language_codes/lists/all&quot;&gt;this
+ * Wikidata page&lt;/a&gt; for a list of valid language codes.
+ *
+ * @param language the two-, three- or six-letter language code
+ * @param value the string
+ */
+<span class="fc" id="L18">public record MLString(String language, String value) { }</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

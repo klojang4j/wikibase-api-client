@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wikibase API client</a> &gt; <a href="index.source.html" class="el_package">org.klojang.wbapiclient</a> &gt; <span class="el_source">RequestUtil.java</span></div><h1>RequestUtil.java</h1><pre class="source lang-java linenums">package org.klojang.wbapiclient;
+
+import org.klojang.wbapiclient.x.JsonUtil;
+
+import java.net.URLEncoder;
+import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Map.Entry;
+
+class RequestUtil {
+
+<span class="nc" id="L13">  private RequestUtil() { throw new UnsupportedOperationException(); }</span>
+
+  static String urlEncodeFormData(Map&lt;String, Object&gt; formData) {
+<span class="nc" id="L16">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L17" title="All 2 branches missed.">    for (Entry&lt;String, Object&gt; entry : formData.entrySet()) {</span>
+<span class="nc bnc" id="L18" title="All 2 branches missed.">      if (sb.length() &gt; 0) {</span>
+<span class="nc" id="L19">        sb.append(&quot;&amp;&quot;);</span>
+      }
+<span class="nc" id="L21">      sb.append(urlEncode(entry.getKey()));</span>
+<span class="nc" id="L22">      sb.append(&quot;=&quot;);</span>
+<span class="nc bnc" id="L23" title="All 6 branches missed.">      String val = switch (entry.getValue()) {</span>
+<span class="nc" id="L24">        case null -&gt; &quot;&quot;;</span>
+<span class="nc" id="L25">        case String x -&gt; urlEncode(x);</span>
+<span class="nc" id="L26">        case Number x -&gt; x.toString();</span>
+<span class="nc" id="L27">        case Boolean x -&gt; x.toString();</span>
+<span class="nc" id="L28">        case Character x -&gt; urlEncode(x.toString());</span>
+<span class="nc" id="L29">        default -&gt; urlEncode(JsonUtil.toJson(entry.getValue()));</span>
+      };
+<span class="nc" id="L31">      sb.append(val);</span>
+<span class="nc" id="L32">    }</span>
+<span class="nc" id="L33">    return sb.toString();</span>
+  }
+
+  static String debugFormData(Map&lt;String, Object&gt; formData) {
+<span class="nc" id="L37">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">    for (Entry&lt;String, Object&gt; entry : formData.entrySet()) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">      if (sb.length() &gt; 0) {</span>
+<span class="nc" id="L40">        sb.append(&quot;&amp;&quot;);</span>
+      }
+<span class="nc" id="L42">      sb.append(entry.getKey());</span>
+<span class="nc" id="L43">      sb.append(&quot;=&quot;);</span>
+<span class="nc bnc" id="L44" title="All 6 branches missed.">      String val = switch (entry.getValue()) {</span>
+<span class="nc" id="L45">        case null -&gt; &quot;&quot;;</span>
+<span class="nc" id="L46">        case String x -&gt; x;</span>
+<span class="nc" id="L47">        case Number x -&gt; x.toString();</span>
+<span class="nc" id="L48">        case Boolean x -&gt; x.toString();</span>
+<span class="nc" id="L49">        case Character x -&gt; x.toString();</span>
+<span class="nc" id="L50">        default -&gt; JsonUtil.toJson(entry.getValue());</span>
+      };
+<span class="nc" id="L52">      sb.append(val);</span>
+<span class="nc" id="L53">    }</span>
+<span class="nc" id="L54">    return sb.toString();</span>
+  }
+
+  private static String urlEncode(String s) {
+<span class="nc" id="L58">    return URLEncoder.encode(s, UTF_8);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

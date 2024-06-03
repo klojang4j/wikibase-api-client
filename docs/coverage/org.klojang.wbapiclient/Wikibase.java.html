@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Wikibase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wikibase API client</a> &gt; <a href="index.source.html" class="el_package">org.klojang.wbapiclient</a> &gt; <span class="el_source">Wikibase.java</span></div><h1>Wikibase.java</h1><pre class="source lang-java linenums">package org.klojang.wbapiclient;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.client.utils.URIBuilder;
+import org.klojang.path.PathWalker;
+import org.klojang.path.util.MapBuilder;
+import org.klojang.wbapiclient.model.WbProperty;
+
+import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
+
+import static java.net.URLEncoder.encode;
+import static java.net.http.HttpResponse.BodyHandlers;
+import static org.klojang.wbapiclient.RequestUtil.debugFormData;
+import static org.klojang.wbapiclient.RequestUtil.urlEncodeFormData;
+
+<span class="nc" id="L25">public class Wikibase {</span>
+
+//  private static final String API_ENDPOINT = &quot;https://lod.dryrun.link/w/api.php&quot;;
+//  private static final String BOT_USER = &quot;Admin@ayco-bot&quot;;
+//  private static final String BOT_PASSWORD = &quot;b98af8m7gpvducbbgnjlb2gvllnu9vu0&quot;;
+
+  private static final String API_ENDPOINT = &quot;https://acc.connecting-collections.dryrun.link/w/api.php&quot;;
+  private static final String BOT_USER = &quot;Ah admin@ayco-bot&quot;;
+  private static final String BOT_PASSWORD = &quot;urp97gt16ujjhmscsv04htjgfpbvtper&quot;;
+
+  public static void main(String[] args)
+        throws URISyntaxException, IOException, InterruptedException {
+<span class="nc" id="L37">    CookieManager cookieManager = new CookieManager();</span>
+    //HttpCookie cookie = new HttpCookie(&quot;session&quot;, &quot;ayco&quot;);
+    //cookie.setPath(&quot;/&quot;);
+    //cookie.setVersion(0);
+    //cookieManager.getCookieStore().add(URI.create(&quot;https://lod.dryrun.link&quot;), cookie);
+<span class="nc" id="L42">    CookieHandler.setDefault(cookieManager);</span>
+
+<span class="nc" id="L44">    try (HttpClient client = HttpClient.newBuilder()</span>
+<span class="nc" id="L45">          .cookieHandler(CookieHandler.getDefault())</span>
+<span class="nc" id="L46">          .build()) {</span>
+<span class="nc" id="L47">      URI uri = new URIBuilder(API_ENDPOINT)</span>
+<span class="nc" id="L48">            .addParameter(&quot;action&quot;, &quot;query&quot;)</span>
+<span class="nc" id="L49">            .addParameter(&quot;meta&quot;, &quot;tokens&quot;)</span>
+<span class="nc" id="L50">            .addParameter(&quot;type&quot;, &quot;login&quot;)</span>
+<span class="nc" id="L51">            .addParameter(&quot;format&quot;, &quot;json&quot;)</span>
+<span class="nc" id="L52">            .build();</span>
+<span class="nc" id="L53">      HttpRequest request = HttpRequest.newBuilder(uri).build();</span>
+<span class="nc" id="L54">      HttpResponse&lt;String&gt; response = client.send(request, BodyHandlers.ofString());</span>
+<span class="nc" id="L55">      String payload = response.body();</span>
+<span class="nc" id="L56">      ObjectMapper om = new ObjectMapper();</span>
+<span class="nc" id="L57">      Map&lt;String, Object&gt; map = om.readValue(payload, Map.class);</span>
+<span class="nc" id="L58">      String token = PathWalker.read(map, &quot;query.tokens.logintoken&quot;);</span>
+<span class="nc" id="L59">      Map&lt;String, Object&gt; formData = MapBuilder.begin()</span>
+<span class="nc" id="L60">            .set(&quot;lgname&quot;, BOT_USER)</span>
+<span class="nc" id="L61">            .set(&quot;lgpassword&quot;, BOT_PASSWORD)</span>
+<span class="nc" id="L62">            .set(&quot;lgtoken&quot;, token)</span>
+<span class="nc" id="L63">            .build();</span>
+<span class="nc" id="L64">      request = HttpRequest.newBuilder()</span>
+<span class="nc" id="L65">            .uri(URI.create(API_ENDPOINT + &quot;?action=login&amp;format=json&quot;))</span>
+<span class="nc" id="L66">            .header(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)</span>
+<span class="nc" id="L67">            .POST(HttpRequest.BodyPublishers.ofString(urlEncodeFormData(</span>
+                  formData)))
+<span class="nc" id="L69">            .build();</span>
+<span class="nc" id="L70">      response = client.send(request, BodyHandlers.ofString());</span>
+//      ((CookieManager) client.cookieHandler().get()).getCookieStore()
+//            .getCookies()
+//            .forEach(System.out::println);
+<span class="nc" id="L74">      payload = response.body();</span>
+<span class="nc" id="L75">      map = om.readValue(payload, Map.class);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">      if (!PathWalker.read(map, &quot;login.result&quot;).equals(&quot;Success&quot;)) {</span>
+<span class="nc" id="L77">        throw new RuntimeException(&quot;Wikibase login failed. &quot; + payload);</span>
+      }
+
+<span class="nc" id="L80">      uri = new URIBuilder(API_ENDPOINT)</span>
+<span class="nc" id="L81">            .addParameter(&quot;action&quot;, &quot;query&quot;)</span>
+<span class="nc" id="L82">            .addParameter(&quot;meta&quot;, &quot;tokens&quot;)</span>
+<span class="nc" id="L83">            .addParameter(&quot;format&quot;, &quot;json&quot;)</span>
+<span class="nc" id="L84">            .build();</span>
+<span class="nc" id="L85">      request = HttpRequest.newBuilder(uri).build();</span>
+<span class="nc" id="L86">      response = client.send(request, BodyHandlers.ofString());</span>
+<span class="nc" id="L87">      payload = response.body();</span>
+<span class="nc" id="L88">      map = om.readValue(payload, Map.class);</span>
+<span class="nc" id="L89">      String csrfToken = PathWalker.read(map, &quot;query.tokens.csrftoken&quot;);</span>
+
+<span class="nc" id="L91">      formData = MapBuilder.begin()</span>
+<span class="nc" id="L92">            .set(&quot;action&quot;, &quot;wbeditentity&quot;)</span>
+<span class="nc" id="L93">            .set(&quot;new&quot;, &quot;property&quot;)</span>
+<span class="nc" id="L94">            .set(&quot;format&quot;, &quot;json&quot;)</span>
+<span class="nc" id="L95">            .set(&quot;token&quot;, csrfToken)</span>
+<span class="nc" id="L96">            .set(&quot;data&quot;,</span>
+                  &quot;{\&quot;labels\&quot;:{\&quot;en\&quot;:{\&quot;language\&quot;:\&quot;en\&quot;,\&quot;value\&quot;:\&quot;test5 property\&quot;},\&quot;fr\&quot;:{\&quot;language\&quot;:\&quot;fr\&quot;,\&quot;value\&quot;:\&quot;test 5 property\&quot;}},\&quot;descriptions\&quot;:{\&quot;en\&quot;:{\&quot;language\&quot;:\&quot;en\&quot;,\&quot;value\&quot;:\&quot;property created via API\&quot;}},\&quot;datatype\&quot;:\&quot;string\&quot;}&quot;)
+<span class="nc" id="L98">            .build();</span>
+//      String data = &quot;&quot;&quot;
+//            {
+//              &quot;datatype&quot; : &quot;string&quot;,
+//              &quot;labels&quot; : {
+//                &quot;en&quot; : {
+//                  &quot;language&quot; : &quot;en&quot;,
+//                  &quot;value&quot; : &quot;test 8 (en)&quot;
+//                },
+//                &quot;fr&quot; : {
+//                  &quot;language&quot; : &quot;fr&quot;,
+//                  &quot;value&quot; : &quot;test 8 (fr)&quot;
+//                }
+//              },
+//              &quot;descriptions&quot; : {
+//                &quot;en&quot; : {
+//                  &quot;language&quot; : &quot;en&quot;,
+//                  &quot;value&quot; : &quot;description 8 (en)&quot;
+//                },
+//                &quot;nl&quot; : {
+//                  &quot;language&quot; : &quot;nl&quot;,
+//                  &quot;value&quot; : &quot;description 8 (nl)&quot;
+//                },
+//                &quot;fr&quot; : {
+//                  &quot;language&quot; : &quot;fr&quot;,
+//                  &quot;value&quot; : &quot;description 8 (fr)&quot;
+//                }
+//              }
+//            }
+//            &quot;&quot;&quot;;
+<span class="nc" id="L128">      WbProperty property = new WbProperty(&quot;en&quot;,</span>
+            &quot;husband_of&quot;,
+            &quot;the legal partner of a person&quot;);
+<span class="nc" id="L131">      formData = MapBuilder.begin()</span>
+<span class="nc" id="L132">            .set(&quot;action&quot;, &quot;wbeditentity&quot;)</span>
+<span class="nc" id="L133">            .set(&quot;new&quot;, &quot;property&quot;)</span>
+<span class="nc" id="L134">            .set(&quot;format&quot;, &quot;json&quot;)</span>
+<span class="nc" id="L135">            .set(&quot;token&quot;, csrfToken)</span>
+<span class="nc" id="L136">            .set(&quot;data&quot;, property)</span>
+<span class="nc" id="L137">            .build();</span>
+<span class="nc" id="L138">      request = HttpRequest.newBuilder()</span>
+<span class="nc" id="L139">            .uri(URI.create(API_ENDPOINT))</span>
+<span class="nc" id="L140">            .header(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)</span>
+<span class="nc" id="L141">            .POST(HttpRequest.BodyPublishers.ofString(urlEncodeFormData(formData)))</span>
+<span class="nc" id="L142">            .build();</span>
+<span class="nc" id="L143">      response = client.send(request, BodyHandlers.ofString());</span>
+<span class="nc" id="L144">      payload = response.body();</span>
+<span class="nc" id="L145">      map = om.readValue(payload, Map.class);</span>
+//      if(map.containsKey(&quot;error&quot;)) {
+//        throw new RuntimeException();
+//      }
+<span class="nc" id="L149">      System.out.println(payload);</span>
+    }
+<span class="nc" id="L151">  }</span>
+
+  List&lt;WbProperty&gt; listProperties()
+        throws URISyntaxException, IOException, InterruptedException {
+<span class="nc" id="L155">    CookieManager cookieManager = new CookieManager();</span>
+    //HttpCookie cookie = new HttpCookie(&quot;session&quot;, &quot;ayco&quot;);
+    //cookie.setPath(&quot;/&quot;);
+    //cookie.setVersion(0);
+    //cookieManager.getCookieStore().add(URI.create(&quot;https://lod.dryrun.link&quot;), cookie);
+<span class="nc" id="L160">    CookieHandler.setDefault(cookieManager);</span>
+    String payload;
+<span class="nc" id="L162">    try (HttpClient client = HttpClient.newBuilder()</span>
+<span class="nc" id="L163">          .cookieHandler(CookieHandler.getDefault())</span>
+<span class="nc" id="L164">          .build()) {</span>
+<span class="nc" id="L165">      URI uri = new URIBuilder(&quot;https://lod.dryrun.link/w/api.php&quot;)</span>
+<span class="nc" id="L166">            .addParameter(&quot;action&quot;, &quot;query&quot;)</span>
+<span class="nc" id="L167">            .addParameter(&quot;meta&quot;, &quot;tokens&quot;)</span>
+<span class="nc" id="L168">            .addParameter(&quot;type&quot;, &quot;login&quot;)</span>
+<span class="nc" id="L169">            .addParameter(&quot;format&quot;, &quot;json&quot;)</span>
+<span class="nc" id="L170">            .build();</span>
+<span class="nc" id="L171">      HttpRequest request = HttpRequest.newBuilder(uri).build();</span>
+<span class="nc" id="L172">      HttpResponse&lt;String&gt; response = client.send(request, BodyHandlers.ofString());</span>
+<span class="nc" id="L173">      payload = response.body();</span>
+    }
+<span class="nc" id="L175">    return null;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
